@@ -24,7 +24,7 @@
 Aucune installation requise. Il suffit d'ouvrir le fichier dans votre navigateur :
 
 ```bash
-git clone https://github.com/votre-pseudo/financeos.git
+git clone https://github.com/itznotgrim/financeos.git
 cd financeos
 # Ouvrez index.html dans votre navigateur
 open index.html          # macOS
