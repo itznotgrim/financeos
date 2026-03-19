@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FinanceOS — Tableau de bord</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Google Fonts : Orbitron (display) + DM Sans (corps) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════ BACKGROUND ═══════════════════════════════ -->
+  <div class="bg-grid"></div>
+  <div class="bg-glow bg-glow--blue"></div>
+  <div class="bg-glow bg-glow--purple"></div>
+
+  <!-- ═══════════════════════════════ HEADER ═══════════════════════════════════ -->
+  <header class="header">
+    <div class="header__logo">
+      <svg class="logo-icon" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <polygon points="20,2 38,12 38,28 20,38 2,28 2,12" fill="none" stroke="url(#hexGrad)" stroke-width="2"/>
+        <polygon points="20,8 32,15 32,25 20,32 8,25 8,15" fill="url(#hexFill)" opacity="0.3"/>
+        <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" font-family="Orbitron" font-size="11" font-weight="700" fill="url(#hexGrad)">FOS</text>
+        <defs>
+          <linearGradient id="hexGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#00d4ff"/>
+            <stop offset="100%" stop-color="#7c3aed"/>
+          </linearGradient>
+          <linearGradient id="hexFill" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#00d4ff"/>
+            <stop offset="100%" stop-color="#7c3aed"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <div>
+        <span class="logo-title">FinancesOS</span>
+        <span class="logo-sub">v1.0 — Système de pilotage financier</span>
+      </div>
+    </div>
+    <div class="header__date" id="headerDate"></div>
+  </header>
+
+  <!-- ═══════════════════════════════ MAIN ════════════════════════════════════ -->
+  <main class="container">
+
+    <!-- KPI CARDS -->
+    <section class="kpi-grid fade-in" id="kpiSection">
+      <div class="kpi-card kpi-card--income">
+        <div class="kpi-card__icon">↑</div>
+        <div class="kpi-card__body">
+          <span class="kpi-card__label">Revenus ce mois</span>
+          <span class="kpi-card__value" id="kpiIncome">0 €</span>
+        </div>
+      </div>
+      <div class="kpi-card kpi-card--expense">
+        <div class="kpi-card__icon">↓</div>
+        <div class="kpi-card__body">
+          <span class="kpi-card__label">Dépenses ce mois</span>
+          <span class="kpi-card__value" id="kpiExpense">0 €</span>
+        </div>
+      </div>
+      <div class="kpi-card kpi-card--balance">
+        <div class="kpi-card__icon">◈</div>
+        <div class="kpi-card__body">
+          <span class="kpi-card__label">Solde disponible</span>
+          <span class="kpi-card__value" id="kpiBalance">0 €</span>
+        </div>
+      </div>
+      <div class="kpi-card kpi-card--months">
+        <div class="kpi-card__icon">≡</div>
+        <div class="kpi-card__body">
+          <span class="kpi-card__label">Mois enregistrés</span>
+          <span class="kpi-card__value" id="kpiMonths">0</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- LAYOUT: Form + Chart -->
+    <div class="two-col fade-in" style="animation-delay:.15s">
+
+      <!-- ══ FORMULAIRE ══ -->
+      <section class="glass-card form-section">
+        <div class="card-header">
+          <h2 class="card-title"><span class="accent-dot"></span>Ajouter un mois</h2>
+        </div>
+
+        <!-- Sélection mois/année -->
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="selectMonth">Mois</label>
+            <select class="form-control" id="selectMonth"></select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="selectYear">Année</label>
+            <select class="form-control" id="selectYear"></select>
+          </div>
+        </div>
+
+        <!-- Revenus -->
+        <div class="section-label">
+          <span class="section-label__dot section-label__dot--income"></span>
+          Revenus
+          <button class="btn-add" id="addIncomeBtn" title="Ajouter un revenu">＋</button>
+        </div>
+        <div id="incomeFields" class="fields-list"></div>
+        <div class="running-total">
+          Total revenus : <strong id="runningIncome">0 €</strong>
+        </div>
+
+        <!-- Dépenses -->
+        <div class="section-label" style="margin-top:1.4rem">
+          <span class="section-label__dot section-label__dot--expense"></span>
+          Dépenses
+          <button class="btn-add" id="addExpenseBtn" title="Ajouter une dépense">＋</button>
+        </div>
+        <div id="expenseFields" class="fields-list"></div>
+        <div class="running-total">
+          Total dépenses : <strong id="runningExpense">0 €</strong>
+        </div>
+
+        <!-- Résumé formulaire -->
+        <div class="form-summary">
+          <div class="summary-row">
+            <span>Solde prévu</span>
+            <strong id="formBalance" class="balance-value">0 €</strong>
+          </div>
+        </div>
+
+        <button class="btn-primary" id="saveMonthBtn">
+          <span>Enregistrer le mois</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="18"><polyline points="20 6 9 17 4 12"/></svg>
+        </button>
+
+        <p class="form-msg" id="formMsg"></p>
+      </section>
+
+      <!-- ══ GRAPHIQUE ══ -->
+      <section class="glass-card chart-section">
+        <div class="card-header">
+          <h2 class="card-title"><span class="accent-dot accent-dot--purple"></span>Évolution mensuelle</h2>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="financeChart"></canvas>
+        </div>
+        <p class="chart-empty" id="chartEmpty">Aucune donnée — enregistrez des mois pour voir le graphique.</p>
+      </section>
+    </div>
+
+    <!-- ══ HISTORIQUE ══ -->
+    <section class="glass-card fade-in" style="animation-delay:.3s">
+      <div class="card-header">
+        <h2 class="card-title"><span class="accent-dot accent-dot--teal"></span>Historique</h2>
+        <span class="badge" id="historyCount">0 mois</span>
+      </div>
+      <div id="historyList" class="history-list">
+        <p class="empty-state">Aucun mois enregistré pour l'instant.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═══════════════════════════════ MODAL DÉTAIL ════════════════════════════ -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal glass-card" id="modalDetail">
+      <button class="modal-close" id="modalClose">✕</button>
+      <div class="card-header">
+        <h2 class="card-title" id="modalTitle"></h2>
+      </div>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
