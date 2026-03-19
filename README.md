@@ -1,5 +1,7 @@
 # FinanceOS 💠 — Tableau de bord financier personnel
 
+> https://www.denis-andronache.fr
+
 > Un tableau de bord minimaliste et élégant pour piloter vos finances mensuelles.  
 > **100 % local — aucune donnée ne quitte votre navigateur.**
 
@@ -77,23 +79,10 @@ financeos/
 
 - [ ] Export des données en JSON / CSV
 - [ ] Import depuis un fichier CSV
-- [ ] Mode multi-profils
 - [ ] Thème clair
 - [ ] Catégories de dépenses avec filtres
 - [ ] Objectifs d'épargne mensuels
 
 ---
 
-## 🤝 Contribuer
-
-Les contributions sont les bienvenues !
-
-1. Forkez le dépôt
-2. Créez une branche : `git checkout -b feature/ma-fonctionnalite`
-3. Commitez : `git commit -m 'feat: ajout de ma fonctionnalité'`
-4. Pushez : `git push origin feature/ma-fonctionnalite`
-5. Ouvrez une Pull Request
-
----
-
-<p align="center">Fait avec ☕ et du CSS</p>
+<p align="center">Fait avec ❤️ et du CSS</p>
