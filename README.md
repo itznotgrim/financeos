@@ -5,8 +5,6 @@
 > Un tableau de bord minimaliste et élégant pour piloter vos finances mensuelles.  
 > **100 % local — aucune donnée ne quitte votre navigateur.**
 
-![FinanceOS preview](preview.png)
-
 ---
 
 ## ✨ Fonctionnalités
