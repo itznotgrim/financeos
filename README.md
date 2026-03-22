@@ -71,15 +71,6 @@ financeos/
 - **[Google Fonts](https://fonts.google.com/)** — Orbitron & DM Sans
 - **localStorage** — persistance des données côté navigateur
 
----
-
-## 🗺️ Roadmap
-
-- [ ] Export des données en JSON / CSV
-- [ ] Import depuis un fichier CSV
-- [ ] Thème clair
-- [ ] Catégories de dépenses avec filtres
-- [ ] Objectifs d'épargne mensuels
 
 ---
 
